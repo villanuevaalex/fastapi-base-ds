@@ -12,6 +12,7 @@ from src.logger import setup_logging
 # Importamos los routers desde nuestros modulos
 from src.personas.router import router as personas_router
 from src.mascotas.router import router as mascotas_router
+from src.profesores.router import router as profesores_router
 from fastapi.middleware.cors import CORSMiddleware
 
 ENV = settings.ENV.upper()
@@ -39,7 +40,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ALEX
+@app.get('/')
+async def welcome():
+    return {'message:': 'Welcome to FASTAPI'}
+
 
 # asociamos los routers a nuestra app
 app.include_router(personas_router)
 app.include_router(mascotas_router)
+app.include_router(profesores_router)
