@@ -11,6 +11,11 @@ router = APIRouter(prefix="/profesores", tags=["profesores"])
 
 # Rutas para Profesores
 
+@router.post("/", response_model=schemas.Profesor)
+def create_profesor(profesor: schemas.ProfesorCreate, db: Session = Depends(get_db)):
+    logger.info("Creando profesor desde endpoint...")  # <- este mensaje se verá por la terminal
+    return services.crear_profesor(db, profesor)
+
 @router.get("/", response_model=list[schemas.Profesor])
 def read_profesor(db: Session = Depends(get_db)):
     logger.info("Consultando la lista de profesores desde endpoint...")  # <- este mensaje se verá por la terminal

@@ -11,6 +11,13 @@ logger = logging.getLogger(__name__)
 
 # operaciones CRUD para Profesores
 
+def crear_profesor(db: Session, profesor: schemas.Profesor) -> schemas.Profesor:
+    _profesor = Profesor(**profesor.model_dump())
+    db.add(_profesor)
+    db.commit()
+    db.refresh(_profesor)
+    return _profesor
+
 def listar_profesores(db: Session) -> List[schemas.Persona]:
     logger.info("Listando profesores desde services")  # <- este mensaje se verá por la terminal
     return db.scalars(select(Profesor)).all()
